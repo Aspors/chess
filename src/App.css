@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #202524;
 }
 
 .board {
@@ -16,6 +17,7 @@
   height: calc(64px * 8);
   display: flex;
   flex-wrap: wrap;
+  border: 5px solid burlywood;
 
 }
 
@@ -28,11 +30,36 @@
 
 }
 
+.cell img {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+
+.cell.available-piece {
+  background-color: #631515;
+}
+
+.cell.selected{
+  background-color: #f3f582;
+}
+
+.available{
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+
+  background-color: #000;
+
+  opacity: .35;
+}
+
 .black{
   background-color: #769456;
 }
 
 .white{
   background-color: #ecedd1;
-  
+
 }
+
