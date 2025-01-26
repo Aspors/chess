@@ -15,7 +15,13 @@ export class Cell {
 
     id: number;
 
-    constructor(board: Board, x: number, y: number, color: Colors, piece: Piece | null) {
+    constructor(
+        board: Board,
+        x: number,
+        y: number,
+        color: Colors,
+        piece: Piece | null
+    ) {
         this.x = x;
         this.y = y;
 
@@ -24,35 +30,34 @@ export class Cell {
         this.board = board;
 
         this.piece = piece;
-        
-        this.available = false
+
+        this.available = false;
 
         this.id = Math.random();
     }
 
-    isEmpty(){
+    isEmpty() {
         return this.piece === null;
     }
 
     isEnemy(target: Cell): boolean {
-        if(target.piece){
+        if (target.piece) {
             return this.piece?.color !== target.piece.color;
         }
 
         return false;
-
     }
 
     isEmptyHorizontal(target: Cell): boolean {
-        if(this.y !== target.y){
-            return false
+        if (this.y !== target.y) {
+            return false;
         }
 
         const min = Math.min(this.x, target.x);
         const max = Math.max(this.x, target.x);
 
-        for(let x = min + 1; x < max; x++){
-            if(!this.board.getCell(x, this.y).isEmpty()){
+        for (let x = min + 1; x < max; x++) {
+            if (!this.board.getCell(x, this.y).isEmpty()) {
                 return false;
             }
         }
@@ -61,15 +66,15 @@ export class Cell {
     }
 
     isEmptyVertical(target: Cell): boolean {
-        if(this.x !== target.x){
-            return false
+        if (this.x !== target.x) {
+            return false;
         }
 
         const min = Math.min(this.y, target.y);
         const max = Math.max(this.y, target.y);
 
-        for(let y = min + 1; y < max; y++){
-            if(!this.board.getCell(this.x, y).isEmpty()){
+        for (let y = min + 1; y < max; y++) {
+            if (!this.board.getCell(this.x, y).isEmpty()) {
                 return false;
             }
         }
@@ -81,15 +86,17 @@ export class Cell {
         const absX = Math.abs(target.x - this.x);
         const absY = Math.abs(target.y - this.y);
 
-        if(absX !== absY){
+        if (absX !== absY) {
             return false;
         }
 
-        const dy = this.y < target.y ? 1 : - 1;
-        const dx = this.x < target.x ? 1 : - 1;
+        const dy = this.y < target.y ? 1 : -1;
+        const dx = this.x < target.x ? 1 : -1;
 
-        for(let i = 1; i < absY; i++){
-            if(!this.board.getCell(this.x + dx * i, this.y + dy * i).isEmpty()){
+        for (let i = 1; i < absY; i++) {
+            if (
+                !this.board.getCell(this.x + dx * i, this.y + dy * i).isEmpty()
+            ) {
                 return false;
             }
 
@@ -99,14 +106,13 @@ export class Cell {
         return true;
     }
 
-
     setPiece(piece: Piece) {
         this.piece = piece;
         this.piece.cell = this;
     }
 
     movePiece(target: Cell) {
-        if(this.piece?.canMove(target)){
+        if (this.piece?.canMove(target)) {
             this.piece.movePiece(target);
             target.setPiece(this.piece);
             this.piece = null;
